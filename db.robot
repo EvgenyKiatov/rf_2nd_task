@@ -6,7 +6,7 @@ Library         PostgreSQLDB        WITH NAME   DB
 Library         JsonValidator
 Library         Collections         WITH NAME   Col
 *** Test Cases ***
-Check Horizontal Filtering
+Check Select On Two Tables
     ${resp}      Req.GET On Session     alias    /products?        params=select=*,categories(categoryname)
     Log          ${resp.json()}
     ${title}   get elements   ${resp.json()}    $..title
@@ -25,7 +25,7 @@ Check Horizontal Filtering
 
     Col.Lists Should Be Equal    ${title_db}     ${title}
     Col.Lists Should Be Equal   ${category_db}      ${categoryname}
-Check Search One Table
+Check Insert Into Table
     [teardown]  Delete From DB and Close Connections
     ${j}     create dictionary      categoryname=Arthouse
     Req.POST On Session     alias    /categories?  json=${j}
